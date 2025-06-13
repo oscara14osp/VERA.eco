@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAERA | Elegancia Sustentable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #fdfdfd;
+      color: #1a1a1a;
+    }
+
+     footer {
+      background-color: #f1f1f1;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .creadores {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .creador {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .creador img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+    }
+
+    .creador span {
+      font-weight: bold;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5rem;
+      background-color: #fff;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    header img {
+      height: 70px;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .cart {
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      transition: background-color 0.3s ease;
+    }
+
+    .hero:hover {
+      background-color: #f3f3f3;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h2 {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .catalog {
+      padding: 2rem;
+    }
+
+    .catalog h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .product-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 2rem;
+      scroll-snap-type: x mandatory;
+    }
+
+    .product {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      width: 300px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .image-gallery {
+      display: flex;
+      overflow-x: auto;
+      gap: 0.5rem;
+    }
+
+    .image-gallery img {
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .product h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+    }
+
+    .product p {
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .product button {
+      background-color: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .subasta {
+      padding: 2rem;
+      background-color: #fafafa;
+      border-top: 1px solid #eee;
+    }
+
+    .subasta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+    }
+
+    .subasta-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 2rem;
+      padding-top: 1rem;
+    }
+
+    .subasta-producto {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #fff;
+      padding: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .subasta-producto img {
+      height: 300px;
+      width: auto;
+      border-radius: 15px;
+    }
+
+    .subasta-producto button {
+      background-color: #000;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      position: relative;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: #f0f0f0;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .recycle-box {
+      margin: 2rem auto;
+      padding: 1rem 2rem;
+      max-width: 700px;
+      text-align: center;
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+
+     .recycle-boxx {
+      margin: 2rem auto;
+      padding: 1rem 2rem;
+      max-width: 700px;
+      text-align: center;
+      background-color: #54582f;
+      color:#ffffff;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+
+    .subastas-contenedor {
+  display: flex;
+  gap: 2rem; 
+  padding: 1rem;
+}
+
+.subasta {
+  flex: 0 0 auto;
+  width: 400px;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+nav a:last-of-type {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+}
+
+/* Botón */
+.abrir-subasta {
+  background-color: #111;
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.abrir-subasta:hover {
+  background-color: #333;
+}
+
+/* Fondo modal */
+.modal-subasta {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenido del modal */
+.modal-subasta-contenido {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 2 8px 16px rgba(0,0,0,0.3);
+  position: relative;
+  text-align: left;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Botón de cerrar */
+.cerrar-subasta {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cerrar-subasta:hover {
+  color: #000;
+}
+
+
+  </style>
+
+  </head>
+<body>
+  <header>
+    <img src="/IMG/BANNER.jpeg" alt="VAERA logo">
+    <nav>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#subasta">Subasta</a>
+      <a href="mailto:contacto@vaera.eco">Contacto</a>
+      <a href="#" onclick="abrirModal()">Iniciar sesión</a>
+      <span class="cart" onclick="alert('Carrito: ' + cart.length + ' producto(s)')">🛒 <span id="cart-count">0</span></span>
+    </nav>
+    
+  </header>
+
+  <div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
+    <h3>Iniciar sesión</h3>
+    <h6>🔐 Disponible solo para usuarios que han entregado:
+✅ 20 kg reciclados para acumular puntos
+🎯 50 kg reciclados para ingresar a la subasta
+</h6>
+
+    <input type="user" placeholder="Usuario" style="width:100%;padding:0.5rem;margin:0.5rem 0;">
+    <input type="code" placeholder="Codigo de Acceso" style="width:100%;padding:0.5rem;margin-bottom:1rem;">
+    <button style="width:100%;background:#000;color:#fff;padding:0.5rem;border:none;">Entrar</button>
+  </div>
+</div>
+
+  <section class="hero">
+    <h1>VAERA</h1> <h2>-Moda de Alta Visión-</h2>
+    <p>VAERA redefine el lujo moderno con piezas versátiles, elegantes y sostenibles hechas a partir de plástico reciclado tratado con ingeniería textil de alta gama. Nuestra misión es transformar no solo tu estilo, sino también el mundo. Diseñamos ropa que se adapta a cada ocasión —desde la oficina hasta la celebración— con un enfoque consciente, sofisticado y funcional.</p>
+  </section>
+
+  <div class="recycle-box">
+    ♻️ <strong>Transforma Plástico en Estilo con Puntos VAERA:</strong> Por cada <strong>1 kg de pastico reciclado</strong> en nuestros puntos de recolección recibes <strong> 5 puntos VAERA.</strong> Acumula puntos y canjéalos por descuentos.  
+    <br><br><strong>¡Reciclar nunca fue tan conveniente!</strong>
+  </div>
+
+  <section class="catalog" id="catalogo">
+    <h2>Catálogo</h2>
+    <div class="product-carousel">
+      <div class="product">
+        <div class="image-gallery">
+          <img src="/IMG/Camisa AZZURRO LISCIO/portada.jpeg" alt="Camisa Azul">
+          <img src="/IMG/Camisa AZZURRO LISCIO/imagen2.jpeg" alt="Camisa Azul">
+          <img src="/IMG/Camisa AZZURRO LISCIO/imagen 3.jpeg" alt="Camisa Azul">
+          <img src="/IMG/Camisa AZZURRO LISCIO/FICHA1.jpeg" alt="Ficha Camisa">
+          <img src="/IMG/Camisa AZZURRO LISCIO/FICHA2.jpeg" alt="Ficha Camisa">
+        </div>
+        <h3>Camisa "Azzurro Liscio"</h3>
+        <p>Hecho 100% de plástico reciclado (PET) tratado para parecer lino de alta gama.</p>
+        <p><strong>-Color Unico-</strong></p>
+        <p><strong>$89.900 / -20% x 860P </strong></p>
+        <button onclick="addToCart('Camisa Azzurro Liscio', 89900)">Añadir al carrito</button>
+      </div>
+
+            <div class="product">
+        <div class="image-gallery">
+          <img src="/IMG/LYAN PANTS/PORTADA.jpeg" alt="Pantalón LYVAN">
+          <img src="/IMG/LYAN PANTS/IMG1.jpeg" alt="Pantalón Detalle">
+          <img src="/IMG/LYAN PANTS/IMG2.jpeg" alt="Pantalón Detalle">
+          <img src="/IMG/LYAN PANTS/IMG3.jpeg" alt="Pantalón Detalle">
+          <img src="/IMG/LYAN PANTS/FICHA.jpeg" alt="Pantalón Detalle">
+        </div>
+        <h3>Pantalón "Lyvan Woman"</h3>
+        <p>Diseño estructurado y versátil en tejido técnico reciclado: 85% compuesto tratado + 15% elastano.
+        <p><strong>-Tres Colores Disponibles-</strong></p>
+        <p><strong>$79.900 / -10% x 340P</strong></p>
+        <button onclick="addToCart('Vestido Nube Serena', 119900)">Añadir al carrito</button>
+      </div>
+
+
+      <div class="product">
+        <div class="image-gallery">
+          <img src="/IMG/Vestido Nube Serena/portada.jpeg" alt="Vestido Nube">
+          <img src="/IMG/Vestido NUBE SERENA/IMAGEN2.jpeg" alt="Vestido Detalle">
+          <img src="/IMG/Vestido NUBE SERENA/IMAGEN3.jpeg" alt="Vestido Detalle">
+          <img src="/IMG/Vestido NUBE SERENA/FICHA1.jpeg" alt="Vestido Detalle">
+          <img src="/IMG/Vestido NUBE SERENA/FICHA2.jpeg" alt="Vestido Detalle">
+        </div>
+        <h3>Vestido "Nube Serena"</h3>
+        <p>Tejido ecológico: 75% PET reciclado + 25% fibra vegetal orgánica.</p>
+        <p><strong>-Color Unico-</strong></p>
+        <p><strong>$119.900 / -15% x 230P</strong></p>
+        <button onclick="addToCart('Vestido Nube Serena', 119900)">Añadir al carrito</button>
+      </div>
+
+      <div class="product">
+        <div class="image-gallery">
+          <img src="/IMG/VERTA LUMA/PORTADA.jpeg" alt="Camisa Vérta Lumé">
+          <img src="/IMG/VERTA LUMA/IMG1.jpeg" alt="CamisaV Detalle">
+          <img src="/IMG/VERTA LUMA/IMG2.jpeg" alt="CamisaV Detalle">
+          <img src="/IMG/VERTA LUMA/IMG3.jpeg" alt="CamisaV Detalle">
+          <img src="/IMG/VERTA LUMA/FICHA.jpeg" alt="CamisaV Detalle">
+        </div>
+        <h3>Camisa "Vérta Lumé"</h3>
+        <p>Textura premium reciclada y diseño retro con elegancia contemporánea.
+        Ideal para oficinas, viajes o días de sol con estilo.</p>
+        <p><strong>-Tres Colores Disponibles-</strong></p>
+        <p><strong>$64.900 / -25% x 730P</strong></p>
+        <button onclick="addToCart('Vestido Nube Serena', 119900)">Añadir al carrito</button>
+      </div>
+
+
+    </div>
+  </section>
+<br></br>
+<div class="recycle-boxx">
+    ♻️ <strong>¿Por qué elegir VAERA?</strong><br><br>
+Cada año, Colombia genera más de <strong> 1,4 millones </strong> de toneladas de deshechos plásticos,
+pero solo el <strong>30% se recicla.</strong> 
+    <br><br>
+<strong>En VAERA transformamos ese exceso en elegancia:</strong><Search></Search>
+convertimos residuos en piezas de moda atemporales y conscientes.  
+    <br><br>
+Creemos que el verdadero lujo es aquel que respeta el planeta y cuenta una historia de cambio.
+<br><br>
+<strong> No es solo una marca. </strong>
+Es una declaración de estilo con propósito. </strong>
+</div>
+<br></br>
+  <h1 style="font-family: Georgia, 'Times New Roman', Times, serif;">Linea en subasta</h1>
+
+  <div class="subastas-contenedor">
+  <section class="subasta" id="subasta">
+    <h3>Línea Aure</h3>
+    <div class="subastas-contenedor">
+      <div class="subasta-producto">
+        <img src="/IMG/subastas/chaquetasubasta.jpeg" alt="Chaqueta Exclusiva">
+        <p>Chaqueta edición limitada. Confeccionadas 100% con microfibras post-consumo tratadas termicamente. Impermeable, ligera y duradera</p>
+        <button onclick="document.getElementById('modal').style.display='flex'">Entrar en subasta</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="subasta" id="subasta">
+    <h3>Línea Noir</h3>
+    <div class="subastas-contenedor">
+      <div class="subasta-producto">
+        <img src="/IMG/subastas/bagsubasta.jpeg" alt="Chaqueta Exclusiva">
+        <p>Diseñado con precisión. Elborado en tejido técnico derivado de plasticos reciclados, con acabados mate para imitar el textil de lujo. Impermeable resistente y 100% libre de crueldad</p>
+        <button onclick="document.getElementById('modal').style.display='flex'">Entrar en subasta</button>
+      </div>
+    </div>
+  </section>
+  </div>
+
+<!-- Botón para abrir el modal -->
+<button class="abrir-subasta" onclick="abrirModalSubasta()">¿Cómo participar en subasta?</button>
+
+<!-- Modal -->
+<div id="modalSubasta" class="modal-subasta">
+  <div class="modal-subasta-contenido">
+    <span class="cerrar-subasta" onclick="cerrarModalSubasta()">&times;</span>
+    <h2><strong>¿Cómo participar en la Subasta?</strong></h2>
+    <p>
+<strong>¡Bienvenido al rincón más exclusivo de VAERA!</strong>
+<br><br>
+Cada año, lanzamos cuatro líneas únicas en subasta, dos por semestre, como parte de nuestro compromiso con la moda circular y consciente.
+Estas prendas no están disponibles en catálogo ni volverán a producirse. Son verdaderas joyas del diseño sustentable, creadas en ediciones ultra limitadas para quienes valoran la elegancia, la exclusividad y el impacto positivo.
+<br><br>
+🛑 IMPORTANTE:<br><br>
+Para participar en nuestras subastas debes haber:
+<br><br>
+1. Completado el aporte de 50kg de plástico reciclado a través de nuestros puntos de recolección oficiales.
+<br><br>
+2. Recibido un usuario y contraseña personalizados, entregados al momento de completar tu recolección.
+<br><br>
+🗝️ Con estos datos puedes iniciar sesión en nuestra plataforma de subastas y pujar por prendas diseñadas exclusivamente para esta experiencia.
+<br><br>
+⏳ ¡Recuerda! Solo abrimos las subastas dos veces al año, y las piezas disponibles no se repetirán jamás.    </p>
+  </div>
+</div>
+
+  
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
+      <h3>Iniciar sesión</h3>
+      <input type="email" placeholder="Correo electrónico" style="width:100%;padding:0.5rem;margin:0.5rem 0;">
+      <input type="password" placeholder="Contraseña" style="width:100%;padding:0.5rem;margin-bottom:1rem;">
+      <button style="width:100%;background:#000;color:#fff;padding:0.5rem;border:none;">Entrar</button>
+    </div>
+  </div>
+  
+  <section id="contacto" style="margin-top: 4rem; text-align: center;">
+    <div class="section-title">Contáctanos</div>
+    <p>Escríbenos a nuestro correo corporativo: <strong>contacto@vaera.eco</strong></p>
+  </section>
+
+  <footer>
+        <h3>VAERA CEOs:</h3>
+    <div class="creadores">
+      <div class="creador">
+        <img src="foto1.jpg" alt="Foto de Marolis">
+        <span>Marolis Cañizares</span>
+      </div>
+      <div class="creador">
+        <img src="foto2.jpg" alt="Sheyla">
+        <span>Sheyla Beltran</span>
+      </div>
+    </div>
+    <br><br>
+    &copy; 2025 VAERA | Moda Sustentable con Visión
+  </footer>
+
+  <script>
+    const cart = [];
+
+    function addToCart(product, price) {
+      cart.push({ product, price });
+      document.getElementById('cart-count').textContent = cart.length;
+      alert(product + " fue añadido al carrito.");
+    }
+  </script>
+
+  <script>
+  function abrirModal() {
+    document.getElementById('modal').style.display = 'flex';
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById('modal');
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+<script>
+  function abrirModalSubasta() {
+    document.getElementById("modalSubasta").style.display = "flex";
+  }
+
+  function cerrarModalSubasta() {
+    document.getElementById("modalSubasta").style.display = "none";
+  }
+
+  // También cierra al hacer clic fuera del modal
+  window.onclick = function(event) {
+    const modal = document.getElementById("modalSubasta");
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+
+</body>
+</html>
+
